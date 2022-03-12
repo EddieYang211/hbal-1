@@ -237,7 +237,7 @@ hbal <- function(
                 fold.co = fold.co,
                 fold.tr=fold.tr,
                 coefs=coefs,
-                control = co.x,
+                ccontrol = co.x,
                 constraint.tolerance = constraint.tolerance,
                 print.level = print.level,
                 base.weight = base.weight,
