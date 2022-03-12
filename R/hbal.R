@@ -202,7 +202,7 @@ hbal <- function(
                 ub = rep(100, length(grouping)-1),
                 opts = list('algorithm'='NLOPT_LN_COBYLA',
                             'maxeval' =200,
-			    'ftol_rel'=1e-5,
+			    'ftol_rel'=1e-4,
 			    'xtol_abs'=1e-3,
                             'print_level'=print.level+2),
                 grouping=grouping,
