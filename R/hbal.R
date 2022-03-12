@@ -203,6 +203,7 @@ hbal <- function(
                 ub = rep(500, length(grouping)-1),
                 opts = list('algorithm'='NLOPT_LN_COBYLA',
                             'maxeval' =200,
+			    'xtol_rel' = 1e-5,
                             'print_level'=print.level+2),
                 grouping=grouping,
                 folds=folds,
