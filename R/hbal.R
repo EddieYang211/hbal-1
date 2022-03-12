@@ -195,14 +195,35 @@ hbal <- function(
 		fold.co <- sample(fold.num.co, ncontrols, replace=F) 
 		fold.num.tr <- rep(1:folds, ceiling(ntreated/folds))
 		fold.tr <- sample(fold.num.tr, ntreated, replace=F)
+		
+		global <- nloptr(x0 = rep(100, length(grouping)-1),
+                eval_f = crossValidate,
+                lb = rep(0, length(grouping)-1),
+                ub = rep(100, length(grouping)-1),
+                opts = list('algorithm'='NLOPT_GN_DIRECT_L',
+                            'maxeval' =200,
+                            'print_level'=print.level+2),
+                grouping=grouping,
+                folds=folds,
+                treatment = X[Treatment==1,],
+                fold.co = fold.co,
+                fold.tr=fold.tr,
+                coefs=coefs,
+                control = co.x,
+                constraint.tolerance = constraint.tolerance,
+                print.level = print.level,
+                base.weight = base.weight,
+                full.t=full.t,
+                full.c=full.c,
+                shuffle.treat=shuffle.treat)
 
-
-		min.c <- nloptr(x0 = rep(100, length(grouping)-1),
+		min.c <- nloptr(x0 = global$solution,
                 eval_f = crossValidate,
                 lb = rep(0, length(grouping)-1),
                 ub = rep(100, length(grouping)-1),
                 opts = list('algorithm'='NLOPT_LN_COBYLA',
                             'maxeval' =200,
+			    'x_tol'=1e-3,
                             'print_level'=print.level+2),
                 grouping=grouping,
                 folds=folds,
