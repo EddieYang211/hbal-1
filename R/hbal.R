@@ -221,7 +221,7 @@ hbal <- function(
 #                shuffle.treat=shuffle.treat)
 
 		
-		min.c <- cobyla(x0 = rep(1, length(grouping)-1),
+		min.c <- nloptr::cobyla(x0 = rep(1, length(grouping)-1),
                 fn = crossValidate,
                 lower = rep(0, length(grouping)-1),
                 upper = rep(100, length(grouping)-1),
