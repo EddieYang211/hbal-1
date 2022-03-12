@@ -258,6 +258,8 @@ hbal <- function(
 				group.assignment=group.assignment,
 				penalty=NULL,
 				call=mcall)
+	
+	out[['nloptr']] <- min.c
 
 	if (cv==TRUE){
 		out[["penalty"]] <- c(0, min.c$solution)
