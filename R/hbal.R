@@ -200,7 +200,7 @@ hbal <- function(
                 eval_f = crossValidate,
                 lb = rep(0, length(grouping)-1),
                 ub = rep(100, length(grouping)-1),
-                opts = list('algorithm'='NLOPT_LN_COBYLA',
+                opts = list('algorithm'='NLOPT_LN_SBPLX',
                             'maxeval' =200,
                             'print_level'=print.level+2),
                 grouping=grouping,
