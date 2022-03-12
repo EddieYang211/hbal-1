@@ -196,11 +196,36 @@ hbal <- function(
 		fold.num.tr <- rep(1:folds, ceiling(ntreated/folds))
 		fold.tr <- sample(fold.num.tr, ntreated, replace=F)
 
-		min.c <- nloptr(x0 = rep(1, length(grouping)-1),
-                eval_f = crossValidate,
-                lb = rep(0, length(grouping)-1),
-                ub = rep(100, length(grouping)-1),
-                opts = list('algorithm'='NLOPT_LN_COBYLA',
+#		min.c <- nloptr(x0 = rep(1, length(grouping)-1),
+#                eval_f = crossValidate,
+#                lb = rep(0, length(grouping)-1),
+#                ub = rep(100, length(grouping)-1),
+#                opts = list('algorithm'='NLOPT_LN_COBYLA',
+#                            'maxeval' =200,
+#			    'ftol_rel'=1e-3,
+#			    'ftol_abs'=1e-5,
+#			    'xtol_abs'=1e-3,
+#                            'print_level'=print.level),
+#                grouping=grouping,
+#                folds=folds,
+#                treatment = X[Treatment==1,],
+#                fold.co = fold.co,
+#                fold.tr=fold.tr,
+#                coefs=coefs,
+#                control = co.x,
+#                constraint.tolerance = constraint.tolerance,
+#                print.level = print.level,
+#                base.weight = base.weight,
+#                full.t=full.t,
+#                full.c=full.c,
+#                shuffle.treat=shuffle.treat)
+
+		
+		min.c <- cobyla(x0 = rep(1, length(grouping)-1),
+                fn = crossValidate,
+                lower = rep(0, length(grouping)-1),
+                upper = rep(100, length(grouping)-1),
+                control = list(
                             'maxeval' =200,
 			    'ftol_rel'=1e-3,
 			    'ftol_abs'=1e-5,
@@ -219,13 +244,13 @@ hbal <- function(
                 full.t=full.t,
                 full.c=full.c,
                 shuffle.treat=shuffle.treat)
-
+		
 		z <- hb(
 			tr_total=as.matrix(tr.total),
 			co_x=co.x,
 			coefs=as.matrix(coefs),
 			base_weight=as.matrix(base.weight),
-			alpha=rep(c(0, min.c$solution), times=grouping), 
+			alpha=rep(c(0, min.c$par), times=grouping), 
 			max_iterations=max.iterations,
 			constraint_tolerance=constraint.tolerance,
 			print_level=print.level
@@ -264,7 +289,7 @@ hbal <- function(
 	#out[['nloptr']] <- min.c
 
 	if (cv==TRUE){
-		out[["penalty"]] <- c(0, min.c$solution)
+		out[["penalty"]] <- c(0, min.c$par)
 	}
 
 	class(out) <- "hbal"
