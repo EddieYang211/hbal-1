@@ -39,7 +39,7 @@
 #' \item{Y}{vector of outcome}
 #' @author Yiqing Xu, Eddie Yang
 #' @importFrom stats var
-#' @importFrom nloptr nloptr
+#' @importFrom nloptr cobyla
 #' @useDynLib hbal, .registration = TRUE
 #' @references Xu, Y., & Yang, E. (2021). Hierarchically Regularized Entropy Balancing.
 #' @examples
