@@ -205,7 +205,7 @@ hbal <- function(
 			    'ftol_rel'=1e-3,
 			    'ftol_abs'=1e-5,
 			    'xtol_abs'=1e-3,
-                            'print_level'=print.level+2),
+                            'print_level'=print.level),
                 grouping=grouping,
                 folds=folds,
                 treatment = X[Treatment==1,],
@@ -261,7 +261,7 @@ hbal <- function(
 				penalty=NULL,
 				call=mcall)
 	
-	out[['nloptr']] <- min.c
+	#out[['nloptr']] <- min.c
 
 	if (cv==TRUE){
 		out[["penalty"]] <- c(0, min.c$solution)
