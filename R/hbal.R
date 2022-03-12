@@ -197,11 +197,11 @@ hbal <- function(
 		fold.tr <- sample(fold.num.tr, ntreated, replace=F)
 
 
-		min.c <- nloptr(x0 = rep(500, length(grouping)-1),
+		min.c <- nloptr(x0 = rep(100, length(grouping)-1),
                 eval_f = crossValidate,
                 lb = rep(0, length(grouping)-1),
-                ub = rep(500, length(grouping)-1),
-                opts = list('algorithm'='NLOPT_LN_SBPLX',
+                ub = rep(100, length(grouping)-1),
+                opts = list('algorithm'='NLOPT_LN_COBYLA',
                             'maxeval' =200,
                             'print_level'=print.level+2),
                 grouping=grouping,
